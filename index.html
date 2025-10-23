@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de la Cesta de Navidad</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎄 Sorteo de la Cesta de Navidad 🎄</h1>
+            <p class="subtitle">¡Participa y gana nuestra fantástica cesta navideña!</p>
+        </header>
+
+        <main>
+            <section class="raffle-section">
+                <h2>Participantes</h2>
+                <div class="participants-container">
+                    <div class="input-group">
+                        <input type="text" id="participantName" placeholder="Nombre del participante">
+                        <button id="addParticipant" class="btn btn-primary">Agregar Participante</button>
+                    </div>
+                    <ul id="participantsList" class="participants-list"></ul>
+                </div>
+            </section>
+
+            <section class="raffle-section">
+                <h2>Realizar Sorteo</h2>
+                <button id="drawWinner" class="btn btn-success">🎁 Sortear Ganador 🎁</button>
+                <div id="winner" class="winner-display"></div>
+            </section>
+
+            <section class="raffle-section info-section">
+                <h2>Acerca del Sorteo</h2>
+                <p>Este sorteo es para determinar el ganador de nuestra cesta de Navidad. Agrega los nombres de todos los participantes y haz clic en "Sortear Ganador" para seleccionar al afortunado.</p>
+                <div class="prize-info">
+                    <h3>🎁 Contenido de la Cesta:</h3>
+                    <ul>
+                        <li>Productos navideños premium</li>
+                        <li>Dulces y turrones tradicionales</li>
+                        <li>Vino y bebidas especiales</li>
+                        <li>¡Y muchas sorpresas más!</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Sorteo de Navidad - ¡Felices Fiestas! 🎅</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

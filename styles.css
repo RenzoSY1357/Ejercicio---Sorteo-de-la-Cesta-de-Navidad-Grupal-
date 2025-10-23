@@ -1,0 +1,373 @@
+/* ====================================
+   CSS para Sorteo de la Cesta de Navidad
+   Diseño simple y claro con tema navideño
+   ==================================== */
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+}
+
+header::before {
+    content: '❄️';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 2em;
+    opacity: 0.3;
+}
+
+header::after {
+    content: '❄️';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2em;
+    opacity: 0.3;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* Main content */
+main {
+    padding: 30px;
+}
+
+.raffle-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+}
+
+.raffle-section h2 {
+    color: #4b134f;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 3px solid #c94b4b;
+    padding-bottom: 10px;
+}
+
+/* Input group */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Botones */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    font-size: 1.3em;
+    padding: 15px 40px;
+    width: 100%;
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    padding: 5px 12px;
+    font-size: 0.9em;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+/* Lista de participantes */
+.participants-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.participants-list li {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s;
+}
+
+.participants-list li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.participant-name {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Visualización del ganador */
+.winner-display {
+    margin-top: 25px;
+    padding: 25px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4b134f;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffa500;
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+}
+
+.winner-display:empty {
+    display: none;
+}
+
+/* Sección de información */
+.info-section {
+    background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
+}
+
+.info-section p {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.prize-info {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.prize-info h3 {
+    color: #c94b4b;
+    margin-bottom: 15px;
+}
+
+.prize-info ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.prize-info ul li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.prize-info ul li::before {
+    content: '🎁';
+    position: absolute;
+    left: 0;
+}
+
+/* Footer */
+footer {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+/* Scrollbar personalizada */
+.participants-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.participants-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.participants-list::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.participants-list::-webkit-scrollbar-thumb:hover {
+    background: #5568d3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .raffle-section {
+        padding: 20px;
+    }
+
+    .raffle-section h2 {
+        font-size: 1.5em;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .btn-success {
+        font-size: 1.1em;
+        padding: 12px 30px;
+    }
+
+    .winner-display {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        border-radius: 15px;
+    }
+
+    header {
+        padding: 30px 15px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .raffle-section {
+        padding: 15px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.participants-list li {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes celebrate {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.winner-display {
+    animation: celebrate 0.5s ease-in-out;
+}
