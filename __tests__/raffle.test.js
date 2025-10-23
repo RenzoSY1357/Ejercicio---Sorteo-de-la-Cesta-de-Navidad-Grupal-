@@ -91,6 +91,19 @@ describe('ChristmasBasketRaffle', () => {
       raffle.removeParticipant('María');
       expect(raffle.getParticipants()).toEqual(['Juan', 'Pedro']);
     });
+
+    test('debe eliminar participante con espacios en blanco', () => {
+      const result = raffle.removeParticipant('  María  ');
+      expect(result).toBe(true);
+      expect(raffle.getParticipantCount()).toBe(2);
+      expect(raffle.getParticipants()).not.toContain('María');
+    });
+
+    test('debe retornar false para parámetros no válidos', () => {
+      const result = raffle.removeParticipant(123);
+      expect(result).toBe(false);
+      expect(raffle.getParticipantCount()).toBe(3);
+    });
   });
 
   describe('getParticipants', () => {

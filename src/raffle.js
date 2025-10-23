@@ -45,7 +45,12 @@ class ChristmasBasketRaffle {
    * @returns {boolean} - true si se eliminó correctamente, false si no se encontró
    */
   removeParticipant(name) {
-    const index = this.participants.indexOf(name);
+    if (typeof name !== 'string') {
+      return false;
+    }
+    
+    const trimmedName = name.trim();
+    const index = this.participants.indexOf(trimmedName);
     if (index === -1) {
       return false;
     }
