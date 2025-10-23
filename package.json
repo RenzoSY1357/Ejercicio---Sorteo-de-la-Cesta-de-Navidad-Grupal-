@@ -1,0 +1,24 @@
+{
+  "name": "ejercicio---sorteo-de-la-cesta-de-navidad-grupal-",
+  "version": "1.0.0",
+  "description": "Sorteo de la Cesta de Navidad - Christmas Basket Raffle",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": ["raffle", "sorteo", "navidad", "christmas"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  }
+}
