@@ -21,7 +21,7 @@ export class Sorteo {
 
     const estadoNumero = this.tablero.obtenerEstadoNumero(numeroGanador);
 
-    if (!estadoNumero.ocupada) {
+    if (!estadoNumero.ocupada || !estadoNumero.emailParticipante) {
       return {
         numeroGanador,
         desierto: true
@@ -29,7 +29,7 @@ export class Sorteo {
     }
 
     const ganador = this.gestorParticipantes.obtenerParticipantePorEmail(
-      estadoNumero.emailParticipante!
+      estadoNumero.emailParticipante
     );
 
     return {
