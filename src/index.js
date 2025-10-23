@@ -1,8 +1,16 @@
 const ChristmasBasketRaffle = require('./raffle');
 
 /**
- * Ejemplo de uso del sorteo de la Cesta de Navidad
- * Example usage of the Christmas Basket Raffle
+ * Función principal que demuestra el uso completo del sistema de sorteo.
+ * Esta función muestra cómo crear un sorteo, añadir participantes,
+ * y realizar el sorteo para seleccionar un ganador.
+ * 
+ * @function main
+ * @returns {void}
+ * 
+ * @example
+ * // Ejecutar el ejemplo desde la línea de comandos
+ * node src/index.js
  */
 function main() {
   console.log('🎄 Sorteo de la Cesta de Navidad 🎄');
