@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Coverage reports
+coverage/
+
+# Jest cache
+.jest-cache/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
