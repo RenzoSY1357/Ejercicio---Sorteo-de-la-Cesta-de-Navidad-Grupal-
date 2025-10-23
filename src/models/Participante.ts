@@ -20,7 +20,8 @@ export class Participante {
       throw new Error('El email no puede estar vacío');
     }
     
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Simple but safe email validation - avoids ReDoS vulnerabilities
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       throw new Error('El email no tiene un formato válido');
     }
