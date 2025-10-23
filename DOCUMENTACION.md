@@ -340,7 +340,7 @@ sorteo.removeParticipant('Pedro');  // false (no existe)
 ### Ejemplo de Manejo Completo de Errores
 
 ```javascript
-function sorteoConManejoDeerrors() {
+function sorteoConManejoDeErrores() {
   const sorteo = new ChristmasBasketRaffle();
 
   // 1. Añadir participantes con manejo de errores
@@ -372,7 +372,7 @@ function sorteoConManejoDeerrors() {
   console.log('Lista final:', sorteo.getParticipants());
 }
 
-sorteoConManejoDeerrors();
+sorteoConManejoDeErrores();
 ```
 
 **Salida esperada:**
