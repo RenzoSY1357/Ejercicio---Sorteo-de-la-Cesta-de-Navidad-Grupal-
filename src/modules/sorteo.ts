@@ -84,6 +84,31 @@ liberarNumero(numeroId: NumeroID): void {
     numero.participante = undefined;
 }
 
+realizarSorteoAleatorio(): { 
+    numerosGenerados: NumeroID[]; 
+    resultadoSorteo: { ganador: IParticipante | null; numero: Numero };
+} {
+    
+    const numerosGenerados: NumeroID[] = [];
+    
+    // Generamos 5 números aleatorios en secuencia
+    for (let i = 0; i < 5; i++) {
+      const numAleatorio = Math.floor(Math.random() * 100); // Número entre 0 y 99
+        numerosGenerados.push(numAleatorio);
+    }
+
+    // El último es el ganador
+    const numeroGanador = numerosGenerados[numerosGenerados.length - 1]!;
+
+    // Reutilizamos la lógica que ya teníamos para encontrar al ganador
+    const resultadoSorteo = this.realizarSorteo(numeroGanador);
+
+return {
+    numerosGenerados,
+    resultadoSorteo,
+    };
+}
+
 // Comienza el sorteo
 realizarSorteo(numeroPremiado: NumeroID): { ganador: IParticipante | null; numero: Numero } {
     
