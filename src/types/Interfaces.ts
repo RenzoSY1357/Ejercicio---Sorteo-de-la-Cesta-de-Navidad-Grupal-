@@ -2,6 +2,7 @@
 export type NumeroID = number;
 
 export interface Participante {
+    id: number;
     nombre: string;
     email: string;
     telefono: string;
