@@ -1,24 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>Sorteo Cesta de Navidad</title>
 </head>
 <body>
-
     <header>
         <h1>Sorteo Cesta de Navidad</h1>
-        <div class="tablero"></div>
+        <p>Sistema de gestión para el sorteo tradicional navideño</p>
     </header>
 
-    <form class="form-participante">
-        <input type="texto" class="nombre" placeholder="Nombre" required>
-        <input type="texto" class="apellidos" placeholder="Apellidos" required>
-        <input type="texto" class="email" placeholder="Email" required>
-        <button type="submit">Registrar Participante</button>
-    </form>
-    
+    <div class="container">
+        
+        <!-- Registro de Participantes -->
+        <div class="seccion">
+            <h2>Registro de Participantes</h2>
+            <form id="form-registro">
+                <div class="campo">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" placeholder="Ej: María García López" required>
+                </div>
+                <div class="campo">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="maria@email.com" required>
+                </div>
+                <div class="campo">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" placeholder="666-123-456" required>
+                </div>
+                <button type="submit" class="boton boton-verde">Registrar Participante</button>
+            </form>
+        </div>
+
+        <!-- Reserva de Números -->
+        <div class="seccion">
+            <h2>Reservar Número</h2>
+            <div class="campo">
+                <label for="email-reserva">Participante:</label>
+                <select id="email-reserva">
+                    <option value="">Selecciona un participante...</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="numero-reserva">Número (0-99):</label>
+                <input type="number" id="numero-reserva" min="0" max="99" placeholder="42">
+            </div>
+            <div class="botones">
+                <button id="btn-reservar" class="boton boton-azul">Reservar</button>
+                <button id="btn-liberar" class="boton boton-gris">Liberar</button>
+            </div>
+        </div>
+
+        <!-- Tablero -->
+        <div class="seccion">
+            <h2>Tablero de Números</h2>
+            <div class="leyenda">
+                <span class="leyenda-item">
+                    <div class="cuadro libre"></div> Libre
+                </span>
+                <span class="leyenda-item">
+                    <div class="cuadro ocupado"></div> Ocupado
+                </span>
+            </div>
+            <div class="tablero" id="tablero-numeros">
+                <!-- Los números se crean con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Sorteo -->
+        <div class="seccion">
+            <h2>Realizar Sorteo</h2>
+            <div class="sorteo-opciones">
+                <div class="campo">
+                    <label for="numero-manual">Número manual:</label>
+                    <input type="number" id="numero-manual" min="0" max="99" placeholder="Número específico">
+                </div>
+                <div class="botones">
+                    <button id="btn-sorteo-manual" class="boton boton-rojo">Sorteo Manual</button>
+                    <button id="btn-sorteo-aleatorio" class="boton boton-rojo">Sorteo Aleatorio</button>
+                </div>
+            </div>
+            
+            <div id="resultado-sorteo" class="resultado" style="display: none;">
+                <h3 id="resultado-titulo"></h3>
+                <div id="resultado-content"></div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="seccion">
+            <h2>Estadísticas</h2>
+            <div class="estadisticas">
+                <div class="stat-box">
+                    <span class="numero" id="stat-participantes">0</span>
+                    <span class="texto">Participantes</span>
+                </div>
+                <div class="stat-box">
+                    <span class="numero" id="stat-ocupados">0</span>
+                    <span class="texto">Números Ocupados</span>
+                </div>
+                <div class="stat-box">
+                    <span class="numero" id="stat-libres">100</span>
+                    <span class="texto">Números Libres</span>
+                </div>
+                <div class="stat-box">
+                    <span class="numero" id="stat-porcentaje">0%</span>
+                    <span class="texto">Ocupación</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consultar Participante -->
+        <div class="seccion">
+            <h2>Consultar Números de Participante</h2>
+            <div class="consulta">
+                <select id="consulta-email">
+                    <option value="">Selecciona un participante...</option>
+                </select>
+                <button id="btn-consultar" class="boton boton-azul">Consultar</button>
+            </div>
+            <div id="resultado-consulta" class="resultado-consulta" style="display: none;">
+                <!-- Resultados aquí -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mensajes -->
+    <div id="mensaje" class="mensaje" style="display: none;">
+        <span id="mensaje-texto"></span>
+        <button id="mensaje-cerrar">×</button>
+    </div>
+
+    <footer>
+        <p>Renzo y Fabricio</p>
+    </footer>
+
+    <script type="module" src="../../dist/app.js"></script>
 </body>
 </html>
