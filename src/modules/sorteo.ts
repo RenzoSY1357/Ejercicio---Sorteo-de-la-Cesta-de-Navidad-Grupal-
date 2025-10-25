@@ -24,7 +24,7 @@ constructor(message: string) {
 export class SorteoNavidad implements ISorteo {
 public readonly gestorParticipantes: GestorParticipantes;
 
-public readonly tablero: Tablero; 
+public readonly tablero: Tablero;
 
 public numeroGanador?: NumeroID;
 public ganador?: IParticipante;

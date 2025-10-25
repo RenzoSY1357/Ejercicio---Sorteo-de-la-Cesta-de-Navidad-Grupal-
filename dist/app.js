@@ -1,34 +1,28 @@
 /**
  * APLICACION PRINCIPAL - SORTEO CESTA DE NAVIDAD
  *
+ * Conecta todos los modulos TypeScript con la interfaz HTML
+ * Autores: Renzo y Fabricio
+ * Curso: DWEC 2024
  */
-
 import { SorteoNavidad } from './modules/sorteo.js';
 import { TableroClass } from './modules/tablero.js';
 import { ParticipanteError } from './modules/participantes.js';
 import { getEstadisticas, listarNumerosPorParticipante } from './modules/informe.js';
-import type { NumeroID, Participante as IParticipante } from './types/Interfaces.js';
-
 class AppSorteoNavidad {
-    private sorteo: SorteoNavidad;
-    
+    sorteo;
     constructor() {
         console.log('Iniciando aplicacion...');
-        
         const tablero = new TableroClass();
         this.sorteo = new SorteoNavidad(tablero);
-        
         this.configurarEventListeners();
         this.inicializarUI();
-        
         console.log('Aplicacion iniciada');
     }
-
-    private configurarEventListeners(): void {
+    configurarEventListeners() {
         // Formulario de registro
-        const formRegistro = document.getElementById('form-registro') as HTMLFormElement;
+        const formRegistro = document.getElementById('form-registro');
         formRegistro?.addEventListener('submit', (e) => this.registrarParticipante(e));
-
         // Botones
         document.getElementById('btn-reservar')?.addEventListener('click', () => this.reservarNumero());
         document.getElementById('btn-liberar')?.addEventListener('click', () => this.liberarNumero());
@@ -37,18 +31,15 @@ class AppSorteoNavidad {
         document.getElementById('btn-consultar')?.addEventListener('click', () => this.consultarParticipante());
         document.getElementById('mensaje-cerrar')?.addEventListener('click', () => this.ocultarMensaje());
     }
-
-    private inicializarUI(): void {
+    inicializarUI() {
         this.crearTableroNumeros();
         this.actualizarEstadisticas();
     }
-
-    private crearTableroNumeros(): void {
+    crearTableroNumeros() {
         const tableroContainer = document.getElementById('tablero-numeros');
-        if (!tableroContainer) return;
-
+        if (!tableroContainer)
+            return;
         tableroContainer.innerHTML = '';
-
         for (let i = 0; i < 100; i++) {
             const numeroDiv = document.createElement('div');
             numeroDiv.className = 'numero libre';
@@ -58,203 +49,168 @@ class AppSorteoNavidad {
             tableroContainer.appendChild(numeroDiv);
         }
     }
-
-    private mostrarInfoNumero(numeroId: NumeroID): void {
+    mostrarInfoNumero(numeroId) {
         const numero = this.sorteo.tablero.numeros[numeroId];
-        
         if (numero?.disponible) {
             this.mostrarMensaje('Numero ' + numeroId.toString().padStart(2, '0') + ': LIBRE');
-        } else if (numero?.participante) {
+        }
+        else if (numero?.participante) {
             this.mostrarMensaje('Numero ' + numeroId.toString().padStart(2, '0') + ': Ocupado por ' + numero.participante.nombre);
         }
     }
-
-    private registrarParticipante(e: Event): void {
+    registrarParticipante(e) {
         e.preventDefault();
-        
-        const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
-        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
-        const telefono = (document.getElementById('telefono') as HTMLInputElement).value.trim();
-
+        const nombre = document.getElementById('nombre').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
         try {
             const participante = this.sorteo.registrarParticipante(nombre, email, telefono);
-            
-            (e.target as HTMLFormElement).reset();
+            e.target.reset();
             this.actualizarSelectsParticipantes();
             this.actualizarEstadisticas();
-            
             this.mostrarMensaje('Participante ' + participante.nombre + ' registrado correctamente', 'exito');
-            
-        } catch (error) {
+        }
+        catch (error) {
             if (error instanceof ParticipanteError) {
                 this.mostrarMensaje('Error: ' + error.message, 'error');
-            } else {
+            }
+            else {
                 this.mostrarMensaje('Error al registrar participante', 'error');
             }
         }
     }
-
-    private actualizarSelectsParticipantes(): void {
-        const selectReserva = document.getElementById('email-reserva') as HTMLSelectElement;
-        const selectConsulta = document.getElementById('consulta-email') as HTMLSelectElement;
-        
-        if (!selectReserva || !selectConsulta) return;
-
+    actualizarSelectsParticipantes() {
+        const selectReserva = document.getElementById('email-reserva');
+        const selectConsulta = document.getElementById('consulta-email');
+        if (!selectReserva || !selectConsulta)
+            return;
         selectReserva.innerHTML = '<option value="">Selecciona un participante...</option>';
         selectConsulta.innerHTML = '<option value="">Selecciona un participante...</option>';
-
         const participantes = this.sorteo.gestorParticipantes.getTodos();
-        
-        participantes.forEach((participante: IParticipante) => {
+        participantes.forEach((participante) => {
             const optionReserva = document.createElement('option');
             optionReserva.value = participante.email;
             optionReserva.textContent = participante.nombre + ' (' + participante.email + ')';
             selectReserva.appendChild(optionReserva);
-            
             const optionConsulta = document.createElement('option');
             optionConsulta.value = participante.email;
             optionConsulta.textContent = participante.nombre + ' (' + participante.email + ')';
             selectConsulta.appendChild(optionConsulta);
         });
     }
-
-    private reservarNumero(): void {
-        const emailSelect = document.getElementById('email-reserva') as HTMLSelectElement;
-        const numeroInput = document.getElementById('numero-reserva') as HTMLInputElement;
-        
+    reservarNumero() {
+        const emailSelect = document.getElementById('email-reserva');
+        const numeroInput = document.getElementById('numero-reserva');
         const email = emailSelect.value;
         const numeroStr = numeroInput.value;
-        
         if (!email) {
             this.mostrarMensaje('Selecciona un participante', 'error');
             return;
         }
-        
         if (!numeroStr) {
             this.mostrarMensaje('Ingresa un numero', 'error');
             return;
         }
-        
         const numeroId = parseInt(numeroStr);
-        
         if (numeroId < 0 || numeroId > 99) {
             this.mostrarMensaje('El numero debe estar entre 0 y 99', 'error');
             return;
         }
-
         try {
             this.sorteo.reservarNumero(numeroId, email);
             numeroInput.value = '';
             this.actualizarTableroVisual();
             this.actualizarEstadisticas();
             this.mostrarMensaje('Numero ' + numeroId.toString().padStart(2, '0') + ' reservado', 'exito');
-            
-        } catch (error) {
+        }
+        catch (error) {
             this.mostrarMensaje('Error: ' + (error instanceof Error ? error.message : 'Error desconocido'), 'error');
         }
     }
-
-    private liberarNumero(): void {
-        const numeroInput = document.getElementById('numero-reserva') as HTMLInputElement;
+    liberarNumero() {
+        const numeroInput = document.getElementById('numero-reserva');
         const numeroStr = numeroInput.value;
-        
         if (!numeroStr) {
             this.mostrarMensaje('Ingresa un numero para liberar', 'error');
             return;
         }
-        
         const numeroId = parseInt(numeroStr);
-        
         if (numeroId < 0 || numeroId > 99) {
             this.mostrarMensaje('El numero debe estar entre 0 y 99', 'error');
             return;
         }
-
         try {
             this.sorteo.liberarNumero(numeroId);
             numeroInput.value = '';
             this.actualizarTableroVisual();
             this.actualizarEstadisticas();
             this.mostrarMensaje('Numero ' + numeroId.toString().padStart(2, '0') + ' liberado', 'exito');
-            
-        } catch (error) {
+        }
+        catch (error) {
             this.mostrarMensaje('Error: ' + (error instanceof Error ? error.message : 'Error desconocido'), 'error');
         }
     }
-
-    private actualizarTableroVisual(): void {
+    actualizarTableroVisual() {
         for (let i = 0; i < 100; i++) {
-            const numeroDiv = document.querySelector('[data-numero="' + i + '"]') as HTMLElement;
-            if (!numeroDiv) continue;
-
+            const numeroDiv = document.querySelector('[data-numero="' + i + '"]');
+            if (!numeroDiv)
+                continue;
             const numero = this.sorteo.tablero.numeros[i];
-            
             numeroDiv.classList.remove('libre', 'ocupado', 'ganador');
-            
             if (numero?.disponible) {
                 numeroDiv.classList.add('libre');
-            } else {
+            }
+            else {
                 numeroDiv.classList.add('ocupado');
             }
         }
     }
-
-    private realizarSorteoManual(): void {
-        const numeroInput = document.getElementById('numero-manual') as HTMLInputElement;
+    realizarSorteoManual() {
+        const numeroInput = document.getElementById('numero-manual');
         const numeroStr = numeroInput.value;
-        
         if (!numeroStr) {
             this.mostrarMensaje('Ingresa un numero para el sorteo', 'error');
             return;
         }
-        
         const numeroPremiado = parseInt(numeroStr);
-        
         if (numeroPremiado < 0 || numeroPremiado > 99) {
             this.mostrarMensaje('El numero debe estar entre 0 y 99', 'error');
             return;
         }
-
         try {
             const resultado = this.sorteo.realizarSorteo(numeroPremiado);
             this.mostrarResultadoSorteo(resultado, numeroPremiado);
             this.marcarNumeroGanador(numeroPremiado);
-            
-        } catch (error) {
+        }
+        catch (error) {
             this.mostrarMensaje('Error: ' + (error instanceof Error ? error.message : 'Error desconocido'), 'error');
         }
     }
-
-    private realizarSorteoAleatorio(): void {
+    realizarSorteoAleatorio() {
         try {
             const resultado = this.sorteo.realizarSorteoAleatorio();
             this.mostrarResultadoSorteo(resultado.resultadoSorteo, resultado.resultadoSorteo.numero.id, resultado.numerosGenerados);
             this.marcarNumeroGanador(resultado.resultadoSorteo.numero.id);
-            
-        } catch (error) {
+        }
+        catch (error) {
             this.mostrarMensaje('Error: ' + (error instanceof Error ? error.message : 'Error desconocido'), 'error');
         }
     }
-
-    private mostrarResultadoSorteo(resultado: any, numeroPremiado: NumeroID, numerosGenerados?: NumeroID[]): void {
+    mostrarResultadoSorteo(resultado, numeroPremiado, numerosGenerados) {
         const resultadoDiv = document.getElementById('resultado-sorteo');
         const tituloDiv = document.getElementById('resultado-titulo');
         const contentDiv = document.getElementById('resultado-content');
-        
-        if (!resultadoDiv || !tituloDiv || !contentDiv) return;
-
+        if (!resultadoDiv || !tituloDiv || !contentDiv)
+            return;
         let html = '';
-
         if (resultado.ganador) {
             tituloDiv.textContent = 'TENEMOS GANADOR!';
-            
             html += '<div class="ganador-info">';
             html += '<h4>Ganador: ' + resultado.ganador.nombre + '</h4>';
             html += '<p><strong>Email:</strong> ' + resultado.ganador.email + '</p>';
             html += '<p><strong>Telefono:</strong> ' + resultado.ganador.telefono + '</p>';
             html += '</div>';
             html += '<div class="numero-ganador">' + numeroPremiado.toString().padStart(2, '0') + '</div>';
-            
             if (numerosGenerados) {
                 html += '<div class="numeros-generados">';
                 html += '<p><strong>Numeros generados:</strong></p>';
@@ -266,15 +222,13 @@ class AppSorteoNavidad {
                 html += '</div>';
                 html += '</div>';
             }
-            
-        } else {
+        }
+        else {
             tituloDiv.textContent = 'SORTEO DESIERTO';
-            
             html += '<div class="sorteo-desierto">';
             html += '<p>El numero premiado <strong>' + numeroPremiado.toString().padStart(2, '0') + '</strong> no tenia participante</p>';
             html += '<p>La cesta se acumula para el proximo sorteo</p>';
             html += '</div>';
-            
             if (numerosGenerados) {
                 html += '<div class="numeros-generados">';
                 html += '<p><strong>Numeros generados:</strong></p>';
@@ -287,121 +241,102 @@ class AppSorteoNavidad {
                 html += '</div>';
             }
         }
-
         contentDiv.innerHTML = html;
         resultadoDiv.style.display = 'block';
     }
-
-    private marcarNumeroGanador(numeroId: NumeroID): void {
+    marcarNumeroGanador(numeroId) {
         const anteriorGanador = document.querySelector('.numero.ganador');
         if (anteriorGanador) {
             anteriorGanador.classList.remove('ganador');
         }
-
-        const numeroDiv = document.querySelector('[data-numero="' + numeroId + '"]') as HTMLElement;
+        const numeroDiv = document.querySelector('[data-numero="' + numeroId + '"]');
         if (numeroDiv) {
             numeroDiv.classList.add('ganador');
         }
     }
-
-    private consultarParticipante(): void {
-        const selectConsulta = document.getElementById('consulta-email') as HTMLSelectElement;
+    consultarParticipante() {
+        const selectConsulta = document.getElementById('consulta-email');
         const email = selectConsulta.value;
-        
         if (!email) {
             this.mostrarMensaje('Selecciona un participante', 'error');
             return;
         }
-
         try {
             const numeros = listarNumerosPorParticipante(this.sorteo, email);
             const resultadoDiv = document.getElementById('resultado-consulta');
-            if (!resultadoDiv) return;
-
+            if (!resultadoDiv)
+                return;
             let html = '';
-            
             if (numeros.length === 0) {
                 html = '<p>Este participante no tiene numeros reservados</p>';
-            } else {
+            }
+            else {
                 const participante = this.sorteo.gestorParticipantes.buscarPorEmail(email);
                 html = '<h4>Numeros de ' + (participante?.nombre || 'Participante') + ':</h4>';
                 html += '<div class="numeros-participante">';
-                
                 numeros.forEach(numero => {
                     html += '<span class="numero-participante">' + numero.id.toString().padStart(2, '0') + '</span>';
                 });
-                
                 html += '</div>';
                 html += '<p><strong>Total:</strong> ' + numeros.length + ' numero(s) reservado(s)</p>';
             }
-            
             resultadoDiv.innerHTML = html;
             resultadoDiv.style.display = 'block';
-            
-        } catch (error) {
+        }
+        catch (error) {
             this.mostrarMensaje('Error: ' + (error instanceof Error ? error.message : 'Error desconocido'), 'error');
         }
     }
-
-    private actualizarEstadisticas(): void {
+    actualizarEstadisticas() {
         const stats = getEstadisticas(this.sorteo);
-        
         const participantesSpan = document.getElementById('stat-participantes');
         const ocupadosSpan = document.getElementById('stat-ocupados');
         const libresSpan = document.getElementById('stat-libres');
         const porcentajeSpan = document.getElementById('stat-porcentaje');
-        
-        if (participantesSpan) participantesSpan.textContent = stats.totalParticipantes.toString();
-        if (ocupadosSpan) ocupadosSpan.textContent = stats.numerosOcupados.toString();
-        if (libresSpan) libresSpan.textContent = stats.numerosLibres.toString();
-        
+        if (participantesSpan)
+            participantesSpan.textContent = stats.totalParticipantes.toString();
+        if (ocupadosSpan)
+            ocupadosSpan.textContent = stats.numerosOcupados.toString();
+        if (libresSpan)
+            libresSpan.textContent = stats.numerosLibres.toString();
         if (porcentajeSpan) {
             const porcentaje = ((stats.numerosOcupados / stats.totalNumeros) * 100).toFixed(1);
             porcentajeSpan.textContent = porcentaje + '%';
         }
     }
-
-    private mostrarMensaje(texto: string, tipo: 'exito' | 'error' | 'warning' | 'info' = 'info'): void {
+    mostrarMensaje(texto, tipo = 'info') {
         const mensajeDiv = document.getElementById('mensaje');
         const mensajeTexto = document.getElementById('mensaje-texto');
-        
-        if (!mensajeDiv || !mensajeTexto) return;
-
+        if (!mensajeDiv || !mensajeTexto)
+            return;
         mensajeTexto.textContent = texto;
-        
         mensajeDiv.classList.remove('exito', 'error', 'warning');
-        
         if (tipo !== 'info') {
             mensajeDiv.classList.add(tipo);
         }
-        
         mensajeDiv.style.display = 'flex';
-        
         setTimeout(() => {
             this.ocultarMensaje();
         }, 4000);
     }
-
-    private ocultarMensaje(): void {
+    ocultarMensaje() {
         const mensajeDiv = document.getElementById('mensaje');
         if (mensajeDiv) {
             mensajeDiv.style.display = 'none';
         }
     }
 }
-
-function inicializarApp(): void {
+function inicializarApp() {
     console.log('Iniciando aplicacion...');
-    
     try {
         new AppSorteoNavidad();
         console.log('Aplicacion lista!');
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error al inicializar:', error);
         alert('Error al inicializar la aplicacion.');
     }
 }
-
 document.addEventListener('DOMContentLoaded', inicializarApp);
-
 export { AppSorteoNavidad };
+//# sourceMappingURL=app.js.map

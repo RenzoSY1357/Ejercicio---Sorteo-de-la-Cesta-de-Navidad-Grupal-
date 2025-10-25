@@ -10,15 +10,17 @@ constructor(message: string) {
 
 // Los datos del participante
 export class Participante implements IParticipante {
+public id: number;
 public nombre: string;
 public email: string;
 public telefono: string;
 
 // El constructor valida que no tenga nada vacio
-constructor(nombre: string, email: string, telefono: string) {
+constructor(id: number, nombre: string, email: string, telefono: string) {
     if (!nombre || !email || !telefono) {
         throw new ParticipanteError('Nombre, email y teléfono son obligatorios');
     }
+    this.id = id;
     this.nombre = nombre;
     this.email = email;
     this.telefono = telefono;
@@ -29,6 +31,7 @@ constructor(nombre: string, email: string, telefono: string) {
 export class GestorParticipantes {
 // La key tipo string y el valor es Participante
 private participantes: Map<string, Participante> = new Map();
+private IdPt: number = 1;
 
 // Método para añadir gente nueva y comprobar si el email ya existe antes de añadirlo
 registrarParticipante(nombre: string, email: string, telefono: string): Participante {
@@ -36,7 +39,7 @@ registrarParticipante(nombre: string, email: string, telefono: string): Particip
     throw new ParticipanteError(`El email "${email}" ya está registrado`);
     }
     
-    const nuevoParticipante = new Participante(nombre, email, telefono);
+    const nuevoParticipante = new Participante(this.IdPt++, nombre, email, telefono);
     this.participantes.set(email, nuevoParticipante);
     return nuevoParticipante;
 }
