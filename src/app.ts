@@ -1,7 +1,7 @@
 /**
- * APLICACION PRINCIPAL - SORTEO CESTA DE NAVIDAD
- *
- */
+ * APLICACION PRINCIPAL - SORTEO CESTA DE NAVIDAD
+ *
+ */
 
 import { SorteoNavidad } from './modules/sorteo.js';
 import { TableroClass } from './modules/tablero.js';
@@ -9,9 +9,21 @@ import { ParticipanteError } from './modules/participantes.js';
 import { getEstadisticas, listarNumerosPorParticipante } from './modules/informe.js';
 import type { NumeroID, Participante as IParticipante } from './types/Interfaces.js';
 
+/**
+ * Clase principal de la aplicación que gestiona la lógica de la interfaz de usuario (UI)
+ * y la interacción con la lógica del sorteo de Navidad
+ */
 class AppSorteoNavidad {
+    /**
+     * Instancia central de la lógica del sorteo
+     * @type {SorteoNavidad}
+     * @private
+     */
     private sorteo: SorteoNavidad;
     
+    /**
+     * Inicializa la aplicación, el sorteo y configura la UI
+     */
     constructor() {
         console.log('Iniciando aplicacion...');
         
@@ -24,6 +36,10 @@ class AppSorteoNavidad {
         console.log('Aplicacion iniciada');
     }
 
+    /**
+     * Configura los oyentes de eventos para todos los elementos interactivos de la UI
+     * @private
+     */
     private configurarEventListeners(): void {
         // Formulario de registro
         const formRegistro = document.getElementById('form-registro') as HTMLFormElement;
@@ -38,11 +54,19 @@ class AppSorteoNavidad {
         document.getElementById('mensaje-cerrar')?.addEventListener('click', () => this.ocultarMensaje());
     }
 
+    /**
+     * Configura el estado inicial de la interfaz de usuario
+     * @private
+     */
     private inicializarUI(): void {
         this.crearTableroNumeros();
         this.actualizarEstadisticas();
     }
 
+    /**
+     * Crea dinámicamente los 100 divs que representan los números del tablero
+     * @private
+     */
     private crearTableroNumeros(): void {
         const tableroContainer = document.getElementById('tablero-numeros');
         if (!tableroContainer) return;
@@ -59,6 +83,15 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Muestra un mensaje emergente con la información de un número al hacer clic
+     *
+     * @param {NumeroID} numeroId - El ID del número (0 a 99)
+     * @private
+     * @example
+     * // Muestra el estado del número 25 en la UI
+     * app.mostrarInfoNumero(25);
+     */
     private mostrarInfoNumero(numeroId: NumeroID): void {
         const numero = this.sorteo.tablero.numeros[numeroId];
         
@@ -69,6 +102,15 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Maneja el envío del formulario de registro para un nuevo participante
+     *
+     * @param {Event} e - El evento de formulario
+     * @private
+     * @example
+     * // Esta función se ejecuta internamente al enviar el formulario con ID 'form-registro'.
+     * // Intenta llamar a sorteo.registrarParticipante(...) y actualiza la UI.
+     */
     private registrarParticipante(e: Event): void {
         e.preventDefault();
         
@@ -94,6 +136,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Rellena los elementos `select` de la UI con la lista actualizada de participantes
+     * @private
+     * @example
+     * // Se llama internamente después de registrar un nuevo participante.
+     * // Rellena los dropdowns de reserva y consulta con los emails disponibles.
+     */
     private actualizarSelectsParticipantes(): void {
         const selectReserva = document.getElementById('email-reserva') as HTMLSelectElement;
         const selectConsulta = document.getElementById('consulta-email') as HTMLSelectElement;
@@ -118,6 +167,13 @@ class AppSorteoNavidad {
         });
     }
 
+    /**
+     * Maneja la reserva de un número del tablero para un participante seleccionado
+     * @private
+     * @example
+     * // Se ejecuta al hacer clic en 'btn-reservar'.
+     * // Llama a sorteo.reservarNumero(numeroId, email).
+     */
     private reservarNumero(): void {
         const emailSelect = document.getElementById('email-reserva') as HTMLSelectElement;
         const numeroInput = document.getElementById('numero-reserva') as HTMLInputElement;
@@ -154,6 +210,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Maneja la liberación de un número del tablero
+     * @private
+     * @example
+     * // Se ejecuta al hacer clic en 'btn-liberar'.
+     * // Llama a sorteo.liberarNumero(numeroId).
+     */
     private liberarNumero(): void {
         const numeroInput = document.getElementById('numero-reserva') as HTMLInputElement;
         const numeroStr = numeroInput.value;
@@ -182,6 +245,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Actualiza las clases CSS de los divs del tablero para reflejar el estado actual
+     * de los números (libre u ocupado)
+     * @private
+     * @example
+     * // Recorre los 100 números y actualiza su clase a 'libre' o 'ocupado'.
+     */
     private actualizarTableroVisual(): void {
         for (let i = 0; i < 100; i++) {
             const numeroDiv = document.querySelector('[data-numero="' + i + '"]') as HTMLElement;
@@ -199,6 +269,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Ejecuta el sorteo utilizando un número introducido manualmente por el usuario
+     * @private
+     * @example
+     * // Se ejecuta al hacer clic en 'btn-sorteo-manual'
+     * // Llama a sorteo.realizarSorteo(numeroPremiado) con el valor del input
+     */
     private realizarSorteoManual(): void {
         const numeroInput = document.getElementById('numero-manual') as HTMLInputElement;
         const numeroStr = numeroInput.value;
@@ -225,6 +302,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Ejecuta el sorteo generando un número ganador aleatorio
+     * @private
+     * @example
+     * // Se ejecuta al hacer clic en 'btn-sorteo-aleatorio'
+     * // Llama a sorteo.realizarSorteoAleatorio()
+     */
     private realizarSorteoAleatorio(): void {
         try {
             const resultado = this.sorteo.realizarSorteoAleatorio();
@@ -236,6 +320,17 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Muestra el resultado del sorteo (ganador o desierto) en la interfaz
+     *
+     * @param {*} resultado - El resultado del sorteo, conteniendo el ganador (si lo hay) y el número
+     * @param {NumeroID} numeroPremiado - El ID del número ganador
+     * @param {NumeroID[]} [numerosGenerados] - Array de números generados durante un sorteo aleatorio (opcional)
+     * @private
+     * @example
+     * // Muestra un modal con los datos del ganador o el mensaje de desierto
+     * app.mostrarResultadoSorteo({ ganador: p1, numero: num10 }, 10);
+     */
     private mostrarResultadoSorteo(resultado: any, numeroPremiado: NumeroID, numerosGenerados?: NumeroID[]): void {
         const resultadoDiv = document.getElementById('resultado-sorteo');
         const tituloDiv = document.getElementById('resultado-titulo');
@@ -292,6 +387,15 @@ class AppSorteoNavidad {
         resultadoDiv.style.display = 'block';
     }
 
+    /**
+     * Marca visualmente el número ganador en el tablero de la UI
+     *
+     * @param {NumeroID} numeroId - El ID del número ganador
+     * @private
+     * @example
+     * // Añade la clase 'ganador' al div del número 10
+     * app.marcarNumeroGanador(10);
+     */
     private marcarNumeroGanador(numeroId: NumeroID): void {
         const anteriorGanador = document.querySelector('.numero.ganador');
         if (anteriorGanador) {
@@ -304,6 +408,13 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Consulta y muestra la lista de números reservados por un participante específico
+     * @private
+     * @example
+     * // Se ejecuta al hacer clic en 'btn-consultar'
+     * // Muestra la lista de números reservados por el email seleccionado
+     */
     private consultarParticipante(): void {
         const selectConsulta = document.getElementById('consulta-email') as HTMLSelectElement;
         const email = selectConsulta.value;
@@ -343,6 +454,12 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Calcula y actualiza las estadísticas (participantes, números ocupados/libres) en la UI
+     * @private
+     * @example
+     * // Actualiza los spans de estadísticas con datos de getEstadisticas(this.sorteo).
+     */
     private actualizarEstadisticas(): void {
         const stats = getEstadisticas(this.sorteo);
         
@@ -361,6 +478,16 @@ class AppSorteoNavidad {
         }
     }
 
+    /**
+     * Muestra un mensaje de notificación en la interfaz de usuario
+     *
+     * @param {string} texto - El contenido del mensaje
+     * @param {'exito' | 'error' | 'warning' | 'info'} [tipo='info'] - El tipo de mensaje para aplicar estilos
+     * @private
+     * @example
+     * app.mostrarMensaje('Reserva exitosa', 'exito');
+     * app.mostrarMensaje('Error al cargar datos', 'error');
+     */
     private mostrarMensaje(texto: string, tipo: 'exito' | 'error' | 'warning' | 'info' = 'info'): void {
         const mensajeDiv = document.getElementById('mensaje');
         const mensajeTexto = document.getElementById('mensaje-texto');
@@ -382,6 +509,10 @@ class AppSorteoNavidad {
         }, 4000);
     }
 
+    /**
+     * Oculta el mensaje de notificación
+     * @private
+     */
     private ocultarMensaje(): void {
         const mensajeDiv = document.getElementById('mensaje');
         if (mensajeDiv) {
@@ -390,6 +521,9 @@ class AppSorteoNavidad {
     }
 }
 
+/**
+ * Función que se ejecuta al cargar completamente el DOM para inicializar la aplicación
+ */
 function inicializarApp(): void {
     console.log('Iniciando aplicacion...');
     
