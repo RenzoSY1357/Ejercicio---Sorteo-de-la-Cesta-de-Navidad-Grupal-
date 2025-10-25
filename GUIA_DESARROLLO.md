@@ -143,5 +143,5 @@ El diseño mantiene un **estilo de proyecto estudiantil**:
 ---
 
 **Desarrollado por:** Renzo y Fabricio  
-**Curso:** DWEC 2024  
+**Curso:** DWEC 2025
 **Tema:** Ejercicio Grupal - Sorteo Cesta de Navidad
