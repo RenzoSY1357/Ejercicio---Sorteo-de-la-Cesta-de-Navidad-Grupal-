@@ -1,0 +1,481 @@
+/* Reset simple */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8f0;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Header */
+header {
+    background-color: #d32f2f;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Container principal */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Secciones */
+.seccion {
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.seccion h2 {
+    color: #2e7d32;
+    font-size: 22px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #2e7d32;
+    padding-bottom: 5px;
+}
+
+/* Formularios */
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: #2e7d32;
+    outline: none;
+}
+
+/* Botones */
+.boton {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.boton-verde {
+    background-color: #4caf50;
+    color: white;
+}
+
+.boton-azul {
+    background-color: #2196f3;
+    color: white;
+}
+
+.boton-rojo {
+    background-color: #f44336;
+    color: white;
+}
+
+.boton-gris {
+    background-color: #757575;
+    color: white;
+}
+
+.boton:hover {
+    opacity: 0.8;
+}
+
+/* Grupo de botones */
+.botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* Tablero de números */
+.leyenda {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cuadro {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.cuadro.libre {
+    background-color: #4caf50;
+}
+
+.cuadro.ocupado {
+    background-color: #f44336;
+}
+
+.tablero {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.numero {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.numero.libre {
+    background-color: #4caf50;
+    color: white;
+}
+
+.numero.ocupado {
+    background-color: #f44336;
+    color: white;
+}
+
+.numero:hover {
+    border-color: #333;
+}
+
+.numero.ganador {
+    background-color: #ffd700;
+    color: #333;
+    animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Estadísticas */
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-box {
+    background-color: #f5f5f5;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+.stat-box .numero {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 5px;
+    width: auto;
+    height: auto;
+    background: none;
+}
+
+.stat-box .texto {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Opciones de sorteo */
+.sorteo-opciones {
+    display: flex;
+    gap: 20px;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.sorteo-opciones .campo {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Resultados */
+.resultado {
+    background-color: #e8f5e8;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.resultado h3 {
+    color: #2e7d32;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.ganador-info {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.numero-ganador {
+    font-size: 48px;
+    font-weight: bold;
+    color: #d32f2f;
+    margin: 10px 0;
+}
+
+.sorteo-desierto {
+    color: #ff9800;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Consulta de participante */
+.consulta {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.consulta select {
+    flex: 1;
+    min-width: 200px;
+}
+
+.resultado-consulta {
+    background-color: #f0f8ff;
+    border: 2px solid #2196f3;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.numeros-participante {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.numero-participante {
+    background-color: #2196f3;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Mensajes de notificación */
+.mensaje {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+    max-width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mensaje.exito {
+    background-color: #4caf50;
+}
+
+.mensaje.error {
+    background-color: #f44336;
+}
+
+.mensaje.warning {
+    background-color: #ff9800;
+}
+
+#mensaje-cerrar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+/* Responsivo básico */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    header h1 {
+        font-size: 24px;
+    }
+    
+    .tablero {
+        grid-template-columns: repeat(8, 1fr);
+    }
+    
+    .numero {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+    }
+    
+    .estadisticas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .sorteo-opciones {
+        flex-direction: column;
+    }
+    
+    .botones {
+        flex-direction: column;
+    }
+    
+    .boton {
+        margin-right: 0;
+        width: 100%;
+    }
+    
+    .consulta {
+        flex-direction: column;
+    }
+    
+    .consulta select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .seccion {
+        padding: 15px;
+    }
+    
+    .tablero {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .numero {
+        width: 35px;
+        height: 35px;
+        font-size: 11px;
+    }
+    
+    .estadisticas {
+        grid-template-columns: 1fr;
+    }
+    
+    .leyenda {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+/* Utilidades simples */
+.oculto {
+    display: none;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.margen-arriba {
+    margin-top: 20px;
+}
+
+/* Estilos adicionales para el sorteo */
+.numeros-generados {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.lista-numeros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.numero-generado {
+    background-color: #2196f3;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.numero-generado.ganador {
+    background-color: #ffd700;
+    color: #333;
+    border: 2px solid #ff9800;
+    animation: parpadeo 1s infinite;
+}

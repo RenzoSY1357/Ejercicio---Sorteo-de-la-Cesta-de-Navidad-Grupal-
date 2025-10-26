@@ -12,31 +12,31 @@ export class NumeroTablero implements Numero {
      * El identificador del número, que es su valor (0 a 99)
      * @type {NumeroID}
      */
-    id: NumeroID;
+     id: NumeroID;
     /**
      * Indica si el número está disponible para ser elegido (true) o si ya está reservado (false)
      * @type {boolean}
      */
-    disponible: boolean;
-    /**
+     disponible: boolean;
+       /**
      * El participante que ha reservado el número, es `undefined` si el número está disponible
      * @type {Participante | undefined}
      */
-    participante?: Participante;
+      participante?: Participante;
 
-    //Construye el numero
-    /**
+      //Construye el numero
+      /**
      * Crea una instancia de NumeroTablero
      * @param {NumeroID} id - El valor numérico del número (0 a 99)
      */
-    constructor(id: NumeroID){
-        this.id = id;
-        this.disponible = true;
-        this.participante = undefined;
-    }
+     constructor(id: NumeroID){
+          this.id = id;
+          this.disponible = true;
+          this.participante = undefined;
+     }
 
-    // Si el numero, esta disponible retorna verdadero, y lo reserva con el participante
-    /**
+      // Si el numero, esta disponible retorna verdadero, y lo reserva con el participante
+      /**
      * Intenta reservar el número para un participante
      * Solo tiene éxito si el número está actualmente disponible
      *
@@ -47,17 +47,17 @@ export class NumeroTablero implements Numero {
      * const exito = num10.reservar(participanteEjemplo); // true
      * const fracaso = num10.reservar(otroParticipante); // false
      */
-    reservar(Participante: Participante): boolean{
-        if(this.disponible) {
-            this.disponible = false;
-            this.participante = Participante; // Corregido: usa el parámetro 'Participante'
-            return true;
-        }
-        return false;
-    }
+      reservar(Participante: Participante): boolean{
+        if(this.disponible) {
+           this.disponible = false;
+           this.participante = Participante; // Corregido: usa el parámetro 'Participante'
+           return true;
+        }
+        return false;
+      }
 
-    // El numero esta disponible?, sino, returna falso
-    /**
+      // El numero esta disponible?, sino, returna falso
+      /**
      * Libera el número, poniéndolo de nuevo a disposición y eliminando el participante asociado
      *
      * @returns {boolean} `true` si el número fue liberado (estaba ocupado), `false` si ya estaba disponible
@@ -66,17 +66,17 @@ export class NumeroTablero implements Numero {
      * const liberado = num10.liberar(); // true
      * const yaLibre = num10.liberar(); // false
      */
-    liberar():boolean {
-        if(!this.disponible){
-            this.disponible = true;
-            this.participante = undefined;
-            return true;
-        }
-        return false;
-    }
+     liberar():boolean {
+          if(!this.disponible){
+               this.disponible = true;
+               this.participante = undefined;
+               return true;
+          }
+          return false;
+     }
 
-    // Verifica si el numero esta disponible
-    /**
+     // Verifica si el numero esta disponible
+     /**
      * Comprueba el estado de disponibilidad del número
      *
      * @returns {boolean} `true` si el número está libre, `false` si está reservado
@@ -84,26 +84,26 @@ export class NumeroTablero implements Numero {
      * const numLibre = new NumeroTablero(5);
      * numLibre.estaDisponible(); // true
      */
-    estaDisponible(): boolean {
-        return this.disponible;
-    }
+     estaDisponible(): boolean {
+     return this.disponible;
+     }
 }
 
 
 // ConsultarNumeroParticipante(ParticiapnteId: number): number {
 
-//         const participante = this.Participante.id[number];
+// const participante = this.Participante.id[number];
 
-//         if(numero.disponible){
+// if(numero.disponible){
 
-//             const numero = this.numeros[participante];
+// const numero = this.numeros[participante];
 
-//             numero!.disponible = false;
-//             const participante: Participante = numero?.participante;
+// numero!.disponible = false;
+// const participante: Participante = numero?.participante;
 
 
-//             return number;
-//         }
+// return number;
+// }
 
-//         return void;
+// return void;
 // }
