@@ -1,9 +1,6 @@
 /**
  * APLICACION PRINCIPAL - SORTEO CESTA DE NAVIDAD
  *
- * Conecta todos los modulos TypeScript con la interfaz HTML
- * Autores: Renzo y Fabricio
- * Curso: DWEC 2024
  */
 import { SorteoNavidad } from './modules/sorteo.js';
 import { TableroClass } from './modules/tablero.js';
